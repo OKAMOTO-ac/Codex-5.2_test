@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>スケジュール管理アプリ</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app__header">
+        <div>
+          <p class="app__eyebrow">Schedule Planner</p>
+          <h1>スケジュール管理アプリ</h1>
+        </div>
+        <div class="app__meta">
+          <span id="today"></span>
+          <span class="app__count" id="task-count">0 件</span>
+        </div>
+      </header>
+
+      <main class="app__body">
+        <section class="panel">
+          <h2>予定を登録</h2>
+          <form id="schedule-form" class="form">
+            <label>
+              タイトル
+              <input type="text" name="title" required placeholder="例: 週次ミーティング" />
+            </label>
+            <label>
+              日付
+              <input type="date" name="date" required />
+            </label>
+            <label>
+              時間
+              <input type="time" name="time" required />
+            </label>
+            <label>
+              カテゴリー
+              <select name="category">
+                <option value="会議">会議</option>
+                <option value="作業">作業</option>
+                <option value="休憩">休憩</option>
+                <option value="学習">学習</option>
+                <option value="その他" selected>その他</option>
+              </select>
+            </label>
+            <label>
+              メモ
+              <textarea name="notes" rows="3" placeholder="目的や準備事項など"></textarea>
+            </label>
+            <button type="submit">予定を追加</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="panel__header">
+            <h2>予定一覧</h2>
+            <div class="filters">
+              <label>
+                日付で絞り込み
+                <input type="date" id="filter-date" />
+              </label>
+              <label>
+                検索
+                <input type="search" id="search-input" placeholder="タイトルやメモ" />
+              </label>
+            </div>
+          </div>
+          <div id="schedule-list" class="schedule-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="schedule-item-template">
+      <article class="schedule-item">
+        <div class="schedule-item__main">
+          <div>
+            <h3 class="schedule-item__title"></h3>
+            <p class="schedule-item__meta"></p>
+            <p class="schedule-item__notes"></p>
+          </div>
+          <span class="schedule-item__badge"></span>
+        </div>
+        <div class="schedule-item__actions">
+          <button class="edit" type="button">編集</button>
+          <button class="delete" type="button">削除</button>
+        </div>
+      </article>
+    </template>
+
+    <div id="edit-modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal__content">
+        <h2>予定を編集</h2>
+        <form id="edit-form" class="form form--compact">
+          <label>
+            タイトル
+            <input type="text" name="title" required />
+          </label>
+          <label>
+            日付
+            <input type="date" name="date" required />
+          </label>
+          <label>
+            時間
+            <input type="time" name="time" required />
+          </label>
+          <label>
+            カテゴリー
+            <select name="category">
+              <option value="会議">会議</option>
+              <option value="作業">作業</option>
+              <option value="休憩">休憩</option>
+              <option value="学習">学習</option>
+              <option value="その他">その他</option>
+            </select>
+          </label>
+          <label>
+            メモ
+            <textarea name="notes" rows="3"></textarea>
+          </label>
+          <div class="modal__actions">
+            <button type="button" id="close-modal" class="ghost">キャンセル</button>
+            <button type="submit">更新</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
